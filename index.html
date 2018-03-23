@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="w3.css">
+    <title>MyGame</title>
+    <script src="FilesJS/jquery-3.2.1.js"></script>
+    <script src="FilesJS/mapManager.js"></script>
+    <script src="FilesJS/View.js"></script>
+    <script src="FilesJS/Tile.js"></script>
+    <script src="FilesJS/objTileSet.js"></script>
+    <script src="FilesJS/Entities.js"></script>
+    <script src="FilesJS/SpriteManager.js"></script>
+    <script src="FilesJS/Sprite.js"></script>
+    <script src="FilesJS/EventsManager.js"></script>
+    <script src="FilesJS/PhysicManager.js"></script>
+    <script src="FilesJS/GameManager.js"></script>
+    <script src="FilesJS/Loader.js"></script>
+    <script src="FilesJS/Clip.js"></script>
+    <script src="FilesJS/SoundManager.js"></script>
+    <script src="FilesJS/GameTime.js"></script>
+</head>
+<body>
+<script type="text/javascript">
+    let eventsManager=null;
+    let spriteManager=null;
+    let mapManager=null;
+    let gameManager=null;
+    let physicsManager=null;
+    let soundManager=new SoundManager();
+    let loader=null;
+    let ctx=null;
+
+    function start(level)
+    {
+
+        if(loader!==null)
+        {
+            delete loader;
+
+        }
+        let canvas = document.getElementById("canvas");
+            ctx = canvas.getContext("2d");
+            mapManager = new MapManager();
+            eventsManager = new EventsManager();
+            spriteManager = new SpriteManager(mapManager);
+            gameManager  = new GameManager(eventsManager,mapManager);
+            physicsManager = new PhysicManager(mapManager,gameManager);
+            loader = new Loader();
+            loader.loadLevel(level,"normal");
+    }
+
+    function getContext() {
+            return ctx;
+    }
+    function  getEventsManager() {
+        return eventsManager;
+    }
+    function getSpriteManager() {
+        return spriteManager;
+    }
+    function getMapManager() {
+        return mapManager;
+    }
+    function  getGameManager() {
+        return gameManager;
+    }
+    function  getPhysicsManager() {
+        return physicsManager;
+    }
+    function getLoader() {
+        return loader;
+    }
+    function getSoundManager() {
+        return soundManager;
+    }
+</script>
+<div class="w3-container">
+    <button style="position: absolute; left: 900px; top: 50px;" onclick="getGameManager().showRecordsTable()" class="w3-button w3-black">Show records table</button>
+
+    <div id="record" class="w3-modal">
+        <div style="width:500px;" class="w3-modal-content w3-animate-zoom w3-card-4">
+            <header class="w3-container w3-teal">
+        <span onclick="document.getElementById('record').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                <h2>RECORDS TABLE</h2>
+            </header>
+            <div id="info">
+                eiufgbri
+            </div>
+            <footer class="w3-container w3-teal">
+                <p>DinoGame</p>
+            </footer>
+        </div>
+    </div>
+</div>
+<div style="position: fixed; top:50%; left: 50%">
+    <div style="position: absolute; top: -400px; left: -500px">
+        <canvas id="canvas" width="1000" height="800" style="border:1px solid black;"></canvas>
+    </div>
+</div>
+<div id="result"></div>
+<script>start(1)</script>
+</body>
+</html>
